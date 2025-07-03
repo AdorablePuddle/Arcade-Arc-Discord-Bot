@@ -123,6 +123,7 @@ class Game(commands.Cog):
     ])
     async def generate(self, interaction, choices : app_commands.Choice[str]):
         if (choices.value == "single"):
+            logger.info("Generate a single team.")
             pokemons = random.choices(self.data, k = 6)
             embed_list = []
             for pokemon in pokemons:
@@ -130,6 +131,7 @@ class Game(commands.Cog):
             await interaction.response.send_message(embeds = embed_list)
             return
         if (choices.value == "two"):
+            logger.info("Generate two teams.")
             choice_pool = random.choices(self.data, k = 12)
             random.shuffle(choice_pool)
             team_1 = choice_pool[:6]
