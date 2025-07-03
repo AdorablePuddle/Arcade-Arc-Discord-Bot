@@ -11,7 +11,7 @@
 2. Install pip
 3. Use the following command to get the requirements.
 ```shell
-pip install requirements.txt
+pip install -r requirements.txt
 ```
 4. Run `main.py`
 ## III. Bug reports:
