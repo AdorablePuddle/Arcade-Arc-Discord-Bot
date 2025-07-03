@@ -13,6 +13,10 @@
 ```shell
 pip install -r requirements.txt
 ```
-4. Run `main.py`
+4. Add a ".env" file, containing a single line:
+```
+TOKEN=[Add your bot token here]
+```
+5. Run `main.py`
 ## III. Bug reports:
 Please report the bugs to @adorable_puddle on Discord. Attached with the log files in the logs folder (not logs/old).
