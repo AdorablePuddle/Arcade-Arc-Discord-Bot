@@ -30,5 +30,5 @@ client.run(os.environ["TOKEN"], log_handler=log_handler)
 ```
 with 
 ```py
-client.run(<Insert your bot token here>, log_handler=log_handler)
+client.run("Insert your bot token here", log_handler=log_handler)
 ```
