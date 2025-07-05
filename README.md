@@ -3,8 +3,10 @@
 - Showcasing a specific character kit.
 - Generate a team.
 - Generate 2 teams with no overlaps.
-- Bake a cake (maybe not).
-- Kick a lalafell (definitely not).
+- Generate multiple teams. Now with options about whether or not you want the team to overlap.
+- Automatically print them in showdown format, making it easy to copy and paste into PokemonShowdown
+- Play piano (maybe not).
+- Punch Teledji Adeledji (implementing).
 - And more to be added (when needed).
 ## II. Installation:
 1. Download python (>= 3.13.1) (remember to check to add Python to PATH).
@@ -22,6 +24,7 @@ TOKEN=[Add your bot token here]
 Please report the bugs to @adorable_puddle on Discord. Attached with the log files in the logs folder (not logs/old).
 ## IV. Known Issues:
 1. KeyError: 'TOKEN'
+
 For some reason, I have no idea why Python decided not to read environment variables sometimes.
 During installation of Python, ensure that Python is added to PATH. Afterward, restart the computer.
 If it doesn't work, a possible hotfix would be to open the source code and replace
