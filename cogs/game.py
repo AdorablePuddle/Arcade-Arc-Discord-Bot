@@ -114,7 +114,7 @@ class Game(commands.Cog):
             return
         for pokemon in pokemons:
             embed_list.append(self.embed_obj(pokemon))
-        await interaction.response.send_message(embedss = embed_list)
+        await interaction.response.send_message(embeds = embed_list)
     
     @app_commands.command(name = "generate", description = "Get random teams")
     @app_commands.choices(choices = [
