@@ -35,3 +35,9 @@ with
 ```py
 client.run("Insert your bot token here", log_handler=log_handler)
 ```
+
+2. Gender is not displayed in PokePaste format
+
+It turns out that the pokemon-format library I have been using (its `Showdown.jsonToShowdown()` function), just ignore gender while making the paste. Fun.
+
+I have decided to clone the entire function itself into the script and fix it myself.

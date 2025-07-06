@@ -2,7 +2,7 @@ import discord
 from discord.ext import commands
 from discord import app_commands
 
-from pokemon_formats import PokePaste, Showdown
+from pokemon_formats import PokePaste
 
 import json
 import os
@@ -42,6 +42,53 @@ weight = [
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(format=f"%(asctime)s - [%(levelname)-7s] : %(message)s", filename=f"logs/game_{int(time.time())}.txt", encoding="utf-8", level=logging.DEBUG)
+
+def jsonToShowdown(json):
+    returnString = ""
+    for pokemon in json:
+        firstLine = ""
+        if pokemon["nickname"] != pokemon["species"]:
+            firstLine += f'{pokemon["nickname"]} ({pokemon["species"]})'
+        else:
+            firstLine += pokemon["species"][:-1]
+        if pokemon["gender"]:
+            firstLine += f' ({pokemon["gender"]})'
+        if pokemon["item"]:
+            firstLine += f' @ {pokemon["item"]}'
+
+        returnString += firstLine
+
+        returnString += f'\nAbility: {pokemon["ability"]}'
+
+        evString = "\nEVs: "
+        ivString = "\nIVs: "
+        for stat in pokemon["evs"]:
+            if pokemon["evs"][stat] != 0:
+                evString += f'{pokemon["evs"][stat]} {stat} / '
+        for stat in pokemon["ivs"]:
+            if pokemon["ivs"][stat] != 31:
+                ivString += f'{pokemon["ivs"][stat]} {stat} / '
+        if evString != "\nEVs: ":
+            returnString += evString[:-3]
+        if ivString != "\nIVs: ":
+            returnString += ivString[:-3]
+
+        returnString = returnString[:-3]
+        returnString += f'\n{pokemon["nature"]} Nature'
+        if pokemon["Gigantamax"]:
+            returnString += '\nGigantamax: Yes'
+        if pokemon["Happiness"] != 255:
+            returnString += f'\nHappiness: {pokemon["Happiness"]}'
+        if pokemon["Hidden Power Type"]:
+            returnString += f'\nHidden Power: {pokemon["Hidden Power Type"]}'
+        if pokemon["Level"] != 100:
+            returnString += f'\nLevel: {pokemon["Level"]}'
+        if pokemon["Shiny"]:
+            returnString += f'\nShiny: Yes'
+        for move in pokemon["moves"]:
+            returnString += f'\n- {move}'
+        returnString += '\n\n'
+    return returnString[:-2]
 
 class Game(commands.Cog):
     def __init__(self, bot):
@@ -153,7 +200,7 @@ class Game(commands.Cog):
                         embed_list.append(self.embed_obj(pokemon))
                     await interaction.response.send_message(embeds = embed_list)
                 elif (formats.value == "pokepaste"):
-                    showdown_format = Showdown.jsonToShowdown(pokemons)
+                    showdown_format = jsonToShowdown(pokemons)
                     await interaction.response.send_message(f"```\nP{showdown_format}\n```")
                 else:
                     await interaction.response.send_message("Invalid format.")
@@ -175,8 +222,8 @@ class Game(commands.Cog):
                         embed_list.append(self.embed_obj(pokemon, 0xF5A9B8))
                     await interaction.followup.send(embeds = embed_list)
                 elif (formats.value == "pokepaste"):
-                    showdown_format_1 = Showdown.jsonToShowdown(team_1)
-                    showdown_format_2 = Showdown.jsonToShowdown(team_2)
+                    showdown_format_1 = jsonToShowdown(team_1)
+                    showdown_format_2 = jsonToShowdown(team_2)
                     await interaction.response.send_message(f"Team 1:\n```\n{showdown_format_1}\n```")
                     await interaction.followup.send(        f"Team 2:\n```\n{showdown_format_2}\n```")
                 else:
@@ -215,7 +262,7 @@ class Game(commands.Cog):
                 await interaction.followup.send(embeds = embed_list)
         elif (formats.value == "pokepaste"):
             for idx, team in enumerate(teams):
-                showdown_text = Showdown.jsonToShowdown(team)
+                showdown_text = jsonToShowdown(team)
                 await interaction.followup.send(f"Team {idx + 1}:\n```\n{showdown_text}\n```")
         else:
             logger.error("Invalid values in 'formats' variable.")
