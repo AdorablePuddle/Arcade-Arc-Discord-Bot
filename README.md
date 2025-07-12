@@ -38,6 +38,22 @@ client.run("Insert your bot token here", log_handler=log_handler)
 
 2. Gender is not displayed in PokePaste format
 
-It turns out that the pokemon-format library I have been using (its `Showdown.jsonToShowdown()` function), just ignore gender while making the paste. Fun.
+It turns out that the pokemon-formats library I have been using (its `Showdown.jsonToShowdown()` function), just ignore gender while making the paste. Fun.
 
 I have decided to clone the entire function itself into the script and fix it myself.
+
+3. Tera doesn't exist
+
+So, it turns out that pokemon-formats library is made before Tera was a thing and so it just doesn't record tera. There is no permanent fix for this unless you are willing to enter the source code of the library itself and fix it there.
+
+4. Nature's Madness
+
+Once again, this is a problem with the pokemon-formats library itself.
+
+The check condition in the library is checked with a line of if-elif, by checking if a line contains the keyword, the library can figure out what data it is inputing. However, this create a minor issue where if the move contains any of the keyword, because the move check is the last of the list, any of the previous check would catch it first, hence deleting the move.
+
+This is fixed by, once again, jumping directly into the source code.
+
+At this point I might as well considered forking it myself if I found the library's github.
+
+For the time being, the previous 2 bugs are **unfixable**. I will come up with a fix at some point in the future.
